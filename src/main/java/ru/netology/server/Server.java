@@ -16,14 +16,14 @@ public class Server {
     public static void main(String[] args) {
         Setting setting = getSetting();
         if (setting == null) return;
-        Clients clients = new Clients();
+        ChatGroup chatGroup = new ChatGroup();
         try {
             final ServerSocketChannel serverChannel = ServerSocketChannel.open();
             serverChannel.bind(new InetSocketAddress(setting.getAddress(), setting.getPort()));
             while (true) {
                 SocketChannel socketChannel = serverChannel.accept();
                 Logger.getInstance().log("Подключился новый клиент;");
-                new ClientThread(socketChannel, clients);
+                new ClientThread(socketChannel, chatGroup);
             }
         } catch (IOException ex) {
             Logger.getInstance().log(ex.getMessage());

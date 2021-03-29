@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Clients {
+public class ChatGroup {
     private final Map<String, Client> clientMap = new ConcurrentHashMap<>();
 
     public void add(Client client) {

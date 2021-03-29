@@ -10,15 +10,15 @@ import java.nio.charset.StandardCharsets;
 public class ClientThread extends Thread {
     private final SocketChannel socketChannel;
     private final ByteBuffer inputBuffer;
-    private final Clients clients;
+    private final ChatGroup chatGroup;
     private final Client client;
 
-    public ClientThread(SocketChannel socketChannel, Clients clients) {
+    public ClientThread(SocketChannel socketChannel, ChatGroup chatGroup) {
         this.socketChannel = socketChannel;
         this.inputBuffer = ByteBuffer.allocate(2 << 10);
-        this.clients = clients;
+        this.chatGroup = chatGroup;
         this.client = new Client(socketChannel);
-        clients.add(client);
+        chatGroup.add(client);
         start();
     }
 
@@ -37,7 +37,7 @@ public class ClientThread extends Thread {
                 Logger.getInstance().log(ex.getMessage());
             }
         }
-        clients.remove(client.getId());
+        chatGroup.remove(client.getId());
         Logger.getInstance().log("Завершение работы с клиентом: " + client.getName());
     }
 
@@ -48,7 +48,7 @@ public class ClientThread extends Thread {
             Logger.getInstance().log("Имя: '" + name + "' установлено для клиента.");
         } else if (message.contains("<Message>")) {
             String msg = getMessage(message);
-            clients.sendMessageToClients(msg, client);
+            chatGroup.sendMessageToClients(msg, client);
         }
     }
 
