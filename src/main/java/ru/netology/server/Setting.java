@@ -16,4 +16,18 @@ public class Setting {
     public int getPort() {
         return port;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        Setting object = (Setting) obj;
+        return (address.equals(object.getAddress())
+                && port == object.getPort());
+
+    }
 }

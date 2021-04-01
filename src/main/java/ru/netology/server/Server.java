@@ -1,5 +1,6 @@
 package ru.netology.server;
 
+
 import ru.netology.logger.Logger;
 
 import java.io.File;
@@ -14,7 +15,7 @@ public class Server {
     private static final String SETTINGS_FILE_NAME = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "Settings.txt";
 
     public static void main(String[] args) {
-        Setting setting = getSetting();
+        Setting setting = getSetting(SETTINGS_FILE_NAME);
         if (setting == null) return;
         ChatGroup chatGroup = new ChatGroup();
         try {
@@ -30,9 +31,9 @@ public class Server {
         }
     }
 
-    private static Setting getSetting() {
+    static Setting getSetting(String path) {
         StringBuilder settingsAsString = new StringBuilder();
-        try (FileReader fileReader = new FileReader(SETTINGS_FILE_NAME)) {
+        try (FileReader fileReader = new FileReader(path)) {
             int c;
             while ((c = fileReader.read()) != -1) {
                 settingsAsString.append((char) c);

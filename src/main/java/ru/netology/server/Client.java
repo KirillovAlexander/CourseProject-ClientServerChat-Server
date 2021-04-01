@@ -1,5 +1,7 @@
 package ru.netology.server;
 
+import ru.netology.logger.Logger;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
@@ -28,7 +30,13 @@ public class Client {
         return name;
     }
 
-    public void sendMessage(String message, Client client) throws IOException {
-        socketChannel.write(ByteBuffer.wrap((client.getName() + ": " + message).getBytes(StandardCharsets.UTF_8)));
+    public boolean sendMessage(String message, Client client) {
+        try {
+            socketChannel.write(ByteBuffer.wrap((client.getName() + ": " + message).getBytes(StandardCharsets.UTF_8)));
+            return true;
+        } catch (IOException e) {
+            Logger.getInstance().log(e.getMessage());
+            return false;
+        }
     }
 }

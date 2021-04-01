@@ -1,18 +1,18 @@
-package ru.netology.logger;
+package ru.netology;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Logger{
+public class Logger {
     private static Logger instance;
     SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
 
     private Logger() {
     }
 
-    public static Logger getInstance() {
+    public static synchronized Logger getInstance() {
         if (instance == null) {
             instance = new Logger();
         }
